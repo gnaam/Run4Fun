@@ -1,0 +1,224 @@
+import greenfoot.*;
+
+
+public class MyWorld extends World
+{
+    
+    private int addObjectTime=0;
+    Score scoreObj=null;
+    public boolean jump;
+    
+    Coin coin = new Coin();
+    Bomb bomb = new Bomb();
+    Sarkar sarkar = new Sarkar();
+    Rock rock = new Rock();
+    Rock2 rock2 = new Rock2();
+
+    Cam1 cam1 = new Cam1();
+    Cam2 cam2 = new Cam2();
+    Cam3 cam3 = new Cam3();
+    Cam4 cam4 = new Cam4();
+    Cam5 cam5 = new Cam5();
+    Cam6 cam6 = new Cam6();
+    Cam7 cam7 = new Cam7();
+    Cam8 cam8 = new Cam8();
+    
+    /*
+    Strip strip1 = new Strip();
+    Strip strip2 = new Strip();
+    Strip strip3 = new Strip();
+    Strip strip4 = new Strip();
+    Strip strip5 = new Strip();
+    Strip strip6 = new Strip();
+    Strip strip7 = new Strip();
+    Strip strip8 = new Strip();
+    Strip strip9 = new Strip(); 
+    Strip strip10 = new Strip();
+    Strip strip11 = new Strip();
+    Strip strip12 = new Strip();
+    Strip strip13 = new Strip();
+    Strip strip14 = new Strip();
+    Strip strip15 = new Strip();
+    Strip strip16 = new Strip();
+    Strip strip17 = new Strip();
+    Strip strip18 = new Strip(); */
+    
+    public MyWorld()
+    {    
+        super(1200, 600, 1,false);
+        setPaintOrder( GameOver.class,Sarkar.class,Bomb.class,Coin.class,Rock.class,Rock2.class,Strip.class,Car1.class,Car2.class,Diamond.class,Road.class);
+        addObject(new Sarkar(), 21,512);
+        
+        scoreObj = new Score();
+        scoreObj.setScore(addObjectTime);
+        addObject( scoreObj, 1000,20);
+        
+        addObject( new Road(), 297,516);
+        addObject( new Road(), 307,572);        
+        addObject( new Road(), 943,516);
+        addObject( new Road(), 917,572);
+        /*
+        addObject( strip1,20,544);
+        addObject( strip2,160,544);
+        addObject( strip3,300,544);
+        addObject( strip4,440,544);
+        addObject( strip5,580,544);
+        addObject( strip6,720,544);
+        addObject( strip7,860,544);
+        addObject( strip8,1000,544);
+        addObject( strip9,1140,544);*/
+        
+        addObject( cam1,165,330);
+        addObject( cam2,442,357);
+        addObject( cam3,715,354);
+        addObject( cam4, 1050,320);
+        setJump(false);
+  
+    }
+    
+    public void act()
+    {
+        
+        scoreObj.setScore(addObjectTime);
+
+            //adding
+            if( addObjectTime%500 == 0 )
+            {
+                addObject(coin, 500+Greenfoot.getRandomNumber(600),445 );
+            }
+            if( addObjectTime%600 == 0)
+            {
+                addObject(bomb, 700+Greenfoot.getRandomNumber(400),445);
+            }
+            if( addObjectTime%700 == 0)
+            {
+                addObject( rock, 900+Greenfoot.getRandomNumber(300), 445);
+            }
+            if( addObjectTime%1100 == 0 )
+            {
+                addObject( rock2,1000+Greenfoot.getRandomNumber(100),445);
+            }
+        
+        
+            //destruction
+            if( !(getObjectsAt(100,454,Rock2.class).isEmpty()) )
+            {
+                removeObject(rock2);
+            }
+            if( !(getObjectsAt(100,454,Rock.class).isEmpty()) )
+            {
+                removeObject(rock);
+            }
+            if( !(getObjectsAt(100,454,Coin.class).isEmpty()) )
+            {
+                removeObject(coin);
+            }
+            if( !(getObjectsAt(100,454,Bomb.class).isEmpty()) )
+            {
+                removeObject(bomb);
+            }
+            if( !(getObjectsAt(100,481,Strip.class).isEmpty()) )
+            {
+                //removeObject(strip);
+            }
+        
+        //adding, destruction of cam
+        if( !(getObjectsAt(-310,330,Cam1.class).isEmpty()) )
+        {
+            removeObject(cam1);
+            addObject(cam5,1086,305);
+        }
+        if( !(getObjectsAt(-260,357,Cam2.class).isEmpty()) )
+        {
+            removeObject(cam2);
+            addObject(cam6,1077,298);
+        }
+        if( !(getObjectsAt(-330,354,Cam3.class).isEmpty()) )
+        {
+            removeObject(cam3);
+            addObject(cam7,1070,234);
+        }
+        if( !(getObjectsAt(-315,320,Cam4.class).isEmpty()) )
+        {
+            removeObject(cam4);
+            addObject(cam8,1055,233);
+        }
+        if( !(getObjectsAt(-265,305,Cam5.class).isEmpty()) )
+        {
+            removeObject(cam5);
+            addObject(cam1,1120,327);
+        }
+        if( !(getObjectsAt(-295,298,Cam6.class).isEmpty()) )
+        {
+            removeObject(cam6);
+            addObject(cam2,1100,354);
+        }
+        if( !(getObjectsAt(-280,234,Cam7.class).isEmpty()) )
+        {
+            removeObject(cam7);
+            addObject(cam3,1077,351);
+        }
+        if( !(getObjectsAt(-300,233,Cam8.class).isEmpty()) )
+        {
+            removeObject(cam8);
+            addObject(cam4,1077,317);
+        }
+        
+        //adding, destruction of strip
+        /*
+        if( !(getObjectsAt(-300,233,Strip1.class).isEmpty()) )
+        {
+            removeObject(strip1);
+            addObject(strip10,1077,317);
+        }
+        if( !(getObjectsAt(-300,233,Strip.class).isEmpty()) )
+        {
+            removeObject(strip1);
+            addObject(strip10,1077,317);
+        }
+        if( !(getObjectsAt(-300,233,Strip.class).isEmpty()) )
+        {
+            removeObject(strip1);
+            addObject(strip10,1077,317);
+        }
+        if( !(getObjectsAt(-300,233,Strip.class).isEmpty()) )
+        {
+            removeObject(strip1);
+            addObject(strip10,1077,317);
+        }
+        if( !(getObjectsAt(-300,233,Strip.class).isEmpty()) )
+        {
+            removeObject(strip1);
+            addObject(strip10,1077,317);
+        }
+        if( !(getObjectsAt(-300,233,Strip.class).isEmpty()) )
+        {
+            removeObject(strip1);
+            addObject(strip10,1077,317);
+        }
+        if( !(getObjectsAt(-300,233,Strip.class).isEmpty()) )
+        {
+            removeObject(strip1);
+            addObject(strip10,1077,317);
+        }
+        if( !(getObjectsAt(-300,233,Strip.class).isEmpty()) )
+        {
+            removeObject(strip1);
+            addObject(strip10,1077,317);
+        }
+        if( !(getObjectsAt(-300,233,Strip.class).isEmpty()) )
+        {
+            removeObject(strip1);
+            addObject(strip10,1077,317);
+        } */
+        addObjectTime++;
+    }
+    public void setJump(boolean j)
+    {
+        jump=j;
+    }
+    public boolean getJump()
+    {
+        return jump;
+    }
+}

@@ -1,0 +1,194 @@
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.awt.Color;
+
+public class Sarkar extends SmoothMover
+{
+    //MyWorld mw = new MyWorld();
+    public boolean onGround=true;
+    private int ySpeed;
+    public int score=0;
+    public int passScore;
+    public boolean death=false;
+    
+    GreenfootImage right = new GreenfootImage("right.png");
+    GreenfootImage left = new GreenfootImage("left.png");
+    GreenfootImage down = new GreenfootImage("down.png");
+    GreenfootImage up = new GreenfootImage("up.png");
+    
+    GreenfootSound rockT = new GreenfootSound("rock.wav");
+    GreenfootSound rockT2 = new GreenfootSound("rock2.wav");
+    GreenfootSound coinT = new GreenfootSound("coin.wav");
+    GreenfootSound bombT = new GreenfootSound("bomb.wav");
+    
+    
+    public Sarkar()
+    {
+        getImage().scale(50,90);
+        
+    }
+    
+    public void act() 
+    {
+        //man is bounded starts
+        
+        if( getX()<0 )
+            setLocation(getX()+5,getY());
+        if( getX()>1200 )
+            setLocation(getX()-5,getY());
+        //ends
+        //if( !mw.getJump() )
+        //{
+            if( getOneIntersectingObject(Coin.class)!=null )
+            {
+                score+=20;
+                coinT.play();
+                removeTouching(Coin.class);
+                //setScore(score);
+                //System.out.println("Act: "+ score);
+                //System.out.println("get: "+ getScore());
+            }
+            //setScore(score);
+        
+            if( getOneIntersectingObject(Bomb.class)!=null )
+            {
+                bombT.play();
+                //setRotation(-90);
+                //setLocation( getX(),getY()+100);
+                death=true;
+                removeTouching( Bomb.class );
+            
+            }
+        
+            if(  (getOneIntersectingObject(Rock.class)!=null) || (getOneIntersectingObject(Rock2.class)!=null) )
+            {
+                rockT.play();
+                setRotation(-30);
+                score--;
+                //setRotation(0);
+            }
+        
+            if( score>=100 )
+            {
+                //levelComplete();
+            }
+            if( death )
+            {
+                /*
+                 * while( getY()<595 )
+                 * {
+                 * setLocation(getX(), getY()+1);
+                } */
+                //gameOver();
+            }
+        
+            moveMents();
+            jump();
+        //}
+        
+        
+        
+        
+    }
+    public void setScore( int s )
+    {
+        passScore=s;
+        System.out.println("set: "+ passScore);
+    }
+    public int getScore()
+    {
+        
+        return passScore;
+        
+    }
+        
+    public void moveMents()
+    {
+        if( Greenfoot.isKeyDown("up") )
+        {
+            setImage(up);
+            up();
+            move(4);
+        }
+        if( Greenfoot.isKeyDown("down") )
+        {
+            setImage(down);
+            down();
+            move(4);
+        }
+        if( Greenfoot.isKeyDown("left") )
+        {
+            setImage(left);
+            left();
+            move(4);
+        }
+        if( Greenfoot.isKeyDown("right") )
+        {
+            setImage(right);
+            right();
+            move(4);
+        }
+    }
+    
+    public void jump()
+    {
+        int groundLevel = (getWorld().getHeight() - getImage().getHeight()/2)-60;
+        //System.out.println(groundLevel);
+        
+        
+        if( getY()==groundLevel )
+        {
+            onGround = true;
+        }
+        if (!onGround)
+        {
+            ySpeed++;
+            setLocation(getX(), getY()+ySpeed);
+            if (getY()>=groundLevel)
+            {
+                setLocation(getX(), groundLevel);
+                Greenfoot.getKey();
+           }
+        }
+        else
+        {
+            if ("space".equals(Greenfoot.getKey()))
+            {
+                ySpeed = -20;
+                setLocation(getX(), getY()+ySpeed);
+            }
+        } 
+        onGround=false;
+    }
+    
+    public void gameOver()
+    {
+        GameOver gameOver = new GameOver();
+        getWorld().addObject( gameOver,getWorld().getWidth()/2,getWorld().getHeight()/2);
+        Greenfoot.stop();
+    }
+    
+    public void levelComplete()
+    {
+        LevelComplete levelC = new LevelComplete();
+        getWorld().addObject( new LevelComplete(),getWorld().getWidth()/2,getWorld().getHeight()/2);
+        Greenfoot.stop();
+    }
+    
+    public void up()
+    {
+        setRotation(270);
+    }
+    public void down()
+    {
+        setRotation(90);
+    }
+    public void left()
+    {
+        setRotation(180);
+    }
+    public void right()
+    {
+        setRotation(0);
+    }
+        
+}
